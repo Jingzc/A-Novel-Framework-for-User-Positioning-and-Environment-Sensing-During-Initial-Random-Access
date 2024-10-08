@@ -36,7 +36,6 @@ function [MSE, x_hat, T] = OAMP_SVD(A, V, x, y, dia, P, C, v_n, u_g, v_g, it, fl
         if t == it
             T = t;
             break
-        % elseif部分是判断如果MSE开始发散，就停止算法
         elseif flag == 1 && t > 1
             if MSE(t) > MSE(t-1)
                 T = t;

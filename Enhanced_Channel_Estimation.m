@@ -1,13 +1,13 @@
 function nmse = Enhanced_Channel_Estimation(y, A, prior, snr)
-    % 接收信号 y
-    % 感知矩阵 A
-    % 待恢复X先验 prior
-    % 信噪比 snr
+    % Received signal y
+    % Perception matrix A
+    % Prior to be restored X prior
+    % Signal-to-noise ratio snr
     [~, SP, VP] = svd(A);
     h_gamp = image_by_EM_GAMP(y, A, snr);
     h_sbl = image_by_SBL(y, A);
 
-    % OAMP参数
+    % OAMP parameters
     P = 0.01;
     u_g = 1;
     sigma = 0.5;

@@ -1,18 +1,16 @@
 function simplifiedPoints = reconstruction(points, epsilon)
-    % douglasPeucker多边形拟合算法
-    % 输入参数：
-    % points: 输入点集，每行一个点 [x, y]
-    % epsilon: 控制简化程度的参数，越小则曲线越精确，但点数越多
-    % 输出参数：
-    % simplifiedPoints: 简化后的点集
+    % Douglas Peucker polygon fitting algorithm
+    % Input parameters:
+    % points: Input point set, one point per line [x, y]
+    % epsilon: Parameter that controls the degree of simplification, the smaller the epsilon, the more accurate the curve, but the more points
+    % Output parameters:
+    % simplifiedPoints: Simplified point set
 
-    % 如果点集中的点数小于3，无法进行进一步简化
     if size(points, 1) < 3
         simplifiedPoints = points;
         return;
     end
 
-    % 查找曲线中距离起点和终点最远的点
     dMax = 0;
     index = 0;
     for i = 2:(size(points, 1) - 1)
@@ -23,7 +21,6 @@ function simplifiedPoints = reconstruction(points, epsilon)
         end
     end
 
-    % 如果最远的点距离大于阈值epsilon，递归地简化左右两段曲线
     if dMax > epsilon
         leftPoints = points(1:index, :);
         rightPoints = points(index:end, :);
@@ -31,13 +28,12 @@ function simplifiedPoints = reconstruction(points, epsilon)
         simplifiedRight = douglasPeucker(rightPoints, epsilon);
         simplifiedPoints = [simplifiedLeft(1:end-1, :); simplifiedRight];
     else
-        % 如果距离都小于阈值epsilon，则直接连接起点和终点
         simplifiedPoints = [points(1, :); points(end, :)];
     end
 end
 
 function distance = pointToLineDistance(point, lineStart, lineEnd)
-    % 计算点到线段的距离
+    % Calculate the distance from a point to a line segment
     a = lineStart - lineEnd;
     b = point - lineEnd;
     distance = norm(cross([a, 0], [b, 0])) / norm(a);
