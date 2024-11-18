@@ -12,7 +12,6 @@ function [lambda, mu, sigma] = GMM_Clustering(data, k, precision)
     
     randIdx = randperm(num);   % do randomly permutation process
     mu = data(randIdx(1:k),:); % Initialize k means for Gaaussians randomly 
-    mu = [12 25; 28 35; 47 25];
     dataVariance =  cov(data,1);    % Obtain the variance of dataset ∑(x-mu)'*(x-mu)/ num
     sigma = cell (1, k);            % Store covariance matrices
     % sigma is initialized as the covariance of the whole dataset
